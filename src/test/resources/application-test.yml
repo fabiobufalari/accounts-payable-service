@@ -1,7 +1,7 @@
 # Path: src/test/resources/application-test.yml
 
-# Configure H2 in-memory database for tests
 spring:
+  # H2 Config (existing)
   datasource:
     url: jdbc:h2:mem:payabledb_test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL
     driverClassName: org.h2.Driver
@@ -11,7 +11,13 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
-    # show-sql: true
 
-# Defina outras propriedades se os testes precisarem (ex: URLs de outros serviços se mockados/usados)
-# Define other properties if tests need them (e.g., URLs for other services if mocked/used)
+  # JWT Secret (if needed directly by tests, otherwise can be omitted for contextLoads)
+  # jwt:
+  #   secret: some-long-test-secret-key-payable
+
+# Add URL for AuthServiceClient needed during context load
+# Adiciona URL para AuthServiceClient necessária durante carga do contexto
+auth:
+  service:
+    url: http://localhost:9999 # Dummy URL for tests / URL fictícia para testes

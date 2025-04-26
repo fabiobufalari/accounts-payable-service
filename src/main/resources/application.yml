@@ -1,36 +1,50 @@
+# Path: src/main/resources/application.yml
 # =========================================
 # Server Configuration / Configuração do Servidor
 # =========================================
 server:
-  port: 8089 # Porta para o accounts-payable-service (exemplo)
+  port: 8088 # Porta para o accounts-payable-service
 
 # =========================================
 # Spring Boot Application Configuration / Configuração da Aplicação Spring Boot
 # =========================================
 spring:
   application:
-    name: accounts-payable-service # Nome do serviço
+    name: accounts-payable-service
 
   # =========================================
   # Datasource Configuration (PostgreSQL) / Configuração do Datasource (PostgreSQL)
   # =========================================
   datasource:
-    url: jdbc:postgresql://localhost:5432/payabledb # <<<-- BD Dedicado (Recomendado)
+    url: jdbc:postgresql://localhost:5432/payabledb # <<<-- BD Dedicado
     username: postgres
     password: postgres
-    # driver-class-name: org.postgresql.Driver # Opcional
 
   # =========================================
   # JPA & Hibernate Configuration / Configuração JPA & Hibernate
   # =========================================
   jpa:
     hibernate:
-      ddl-auto: update # CUIDADO em produção!
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
         format_sql: true
-        # dialect: org.hibernate.dialect.PostgreSQLDialect # Opcional
+
+# =========================================
+# External Service URLs / URLs de Serviços Externos
+# =========================================
+auth:
+  service:
+    # URL completa base do serviço de autenticação (incluindo context-path)
+    url: ${AUTH_SERVICE_URL:http://localhost:8083/api} # <<<--- CONFIRME A URL
+
+# =========================================
+# JWT Configuration / Configuração JWT
+# =========================================
+jwt:
+  # Chave secreta para validar tokens JWT (DEVE ser igual à usada pelo auth-service)
+  secret: ${JWT_SECRET_KEY:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970!} # <<<--- CONFIRME A CHAVE
 
 # =========================================
 # Logging Configuration (Example) / Configuração de Logging (Exemplo)
@@ -38,18 +52,18 @@ spring:
 logging:
   level:
     org.springframework.web: INFO
+    org.springframework.security: INFO # Mude para DEBUG para ver detalhes
     com.bufalari.payable: DEBUG # Seu pacote
     org.hibernate.SQL: DEBUG
 
 # =========================================
 # Swagger/OpenAPI Configuration (Example) / Configuração Swagger/OpenAPI (Exemplo)
 # =========================================
-# Add springdoc-openapi-starter-webmvc-ui dependency if needed
 springdoc:
   api-docs:
     path: /v3/api-docs
   swagger-ui:
-    path: /swagger-ui.html # Acesso à UI do Swagger
+    path: /swagger-ui.html
     operations-sorter: method
   default-consumes-media-type: application/json
   default-produces-media-type: application/json

@@ -1,17 +1,14 @@
+// Path: src/main/java/com/bufalari/payable/AccountsPayableServiceApplication.java
 package com.bufalari.payable;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-// Import and enable Auditing via config class / Importar e habilitar Auditoria via classe de config
-// import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.cloud.openfeign.EnableFeignClients; // <<<--- IMPORTAR
+// import org.springframework.data.jpa.repository.config.EnableJpaAuditing; // Se usar JpaAuditingConfig
 
-/**
- * Main application class for the Accounts Payable Service.
- * Classe principal da aplicação para o Serviço de Contas a Pagar.
- */
 @SpringBootApplication
-// Auditing is enabled via JpaAuditingConfig / Auditoria habilitada via JpaAuditingConfig
-// @EnableJpaAuditing // Remove if using JpaAuditingConfig
+@EnableFeignClients(basePackages = "com.bufalari.payable.client") // <<<--- ADICIONAR
+// @EnableJpaAuditing // Se usar JpaAuditingConfig
 public class AccountsPayableServiceApplication {
 
 	public static void main(String[] args) {

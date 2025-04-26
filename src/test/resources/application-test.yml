@@ -1,0 +1,17 @@
+# Path: src/test/resources/application-test.yml
+
+# Configure H2 in-memory database for tests
+spring:
+  datasource:
+    url: jdbc:h2:mem:payabledb_test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    # show-sql: true
+
+# Defina outras propriedades se os testes precisarem (ex: URLs de outros serviços se mockados/usados)
+# Define other properties if tests need them (e.g., URLs for other services if mocked/used)

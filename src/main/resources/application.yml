@@ -1,0 +1,55 @@
+# =========================================
+# Server Configuration / Configuração do Servidor
+# =========================================
+server:
+  port: 8089 # Porta para o accounts-payable-service (exemplo)
+
+# =========================================
+# Spring Boot Application Configuration / Configuração da Aplicação Spring Boot
+# =========================================
+spring:
+  application:
+    name: accounts-payable-service # Nome do serviço
+
+  # =========================================
+  # Datasource Configuration (PostgreSQL) / Configuração do Datasource (PostgreSQL)
+  # =========================================
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payabledb # <<<-- BD Dedicado (Recomendado)
+    username: postgres
+    password: postgres
+    # driver-class-name: org.postgresql.Driver # Opcional
+
+  # =========================================
+  # JPA & Hibernate Configuration / Configuração JPA & Hibernate
+  # =========================================
+  jpa:
+    hibernate:
+      ddl-auto: update # CUIDADO em produção!
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        # dialect: org.hibernate.dialect.PostgreSQLDialect # Opcional
+
+# =========================================
+# Logging Configuration (Example) / Configuração de Logging (Exemplo)
+# =========================================
+logging:
+  level:
+    org.springframework.web: INFO
+    com.bufalari.payable: DEBUG # Seu pacote
+    org.hibernate.SQL: DEBUG
+
+# =========================================
+# Swagger/OpenAPI Configuration (Example) / Configuração Swagger/OpenAPI (Exemplo)
+# =========================================
+# Add springdoc-openapi-starter-webmvc-ui dependency if needed
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html # Acesso à UI do Swagger
+    operations-sorter: method
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json

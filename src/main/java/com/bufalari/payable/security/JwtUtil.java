@@ -1,5 +1,5 @@
 // Path: employee-and-costs-service/src/main/java/com/bufalari/employee/config/JwtUtil.java
-package com.bufalari.payable.secutity;
+package com.bufalari.payable.security;
 
 import io.jsonwebtoken.*; // Import SignatureException etc.
 import io.jsonwebtoken.security.Keys;
@@ -14,8 +14,6 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey; // Correct import for SecretKey
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -29,7 +27,7 @@ public class JwtUtil {
 
     // Inject the secret key from application properties
     // Injeta a chave secreta das propriedades da aplicação
-    @Value("${jwt.secret}")// Make sure this property exists in application.yml/properties
+    @Value("${security.jwt.token.secret-key}")// Make sure this property exists in application.yml/properties
     private String configuredSecretKey;
 
     private SecretKey secretKey; // Use SecretKey type

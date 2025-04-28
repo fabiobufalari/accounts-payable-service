@@ -1,5 +1,4 @@
-// Path: src/main/java/com/bufalari/payable/security/CustomUserDetailsService.java
-package com.bufalari.payable.secutity;
+package com.bufalari.payable.security;
 
 import com.bufalari.payable.client.AuthServiceClient; // Correct package
 import com.bufalari.payable.dto.UserDetailsDTO;      // Correct package

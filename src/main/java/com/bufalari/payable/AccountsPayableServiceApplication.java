@@ -1,4 +1,3 @@
-// Path: src/main/java/com/bufalari/payable/AccountsPayableServiceApplication.java
 package com.bufalari.payable;
 
 import org.springframework.boot.SpringApplication;

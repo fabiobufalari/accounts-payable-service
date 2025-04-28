@@ -1,6 +1,6 @@
 package com.bufalari.payable.config;
 
-import com.bufalari.payable.secutity.JwtAuthenticationFilter;
+import com.bufalari.payable.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

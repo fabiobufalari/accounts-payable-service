@@ -1,4 +1,3 @@
-// Path: src/main/java/com/bufalari/payable/dto/UserDetailsDTO.java
 package com.bufalari.payable.dto;
 
 import lombok.Data;
@@ -16,8 +15,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDetailsDTO {
-    private UUID id;
+    private UUID id; // Already UUID
     private String username;
-    private String password;
+    private String password; // Should be hashed if retrieved, often omitted
     private List<String> roles;
 }

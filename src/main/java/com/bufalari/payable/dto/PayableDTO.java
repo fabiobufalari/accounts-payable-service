@@ -14,12 +14,13 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID; // <<<--- IMPORT UUID
 
 /**
  * DTO for Account Payable data transfer (Revised for Payment Transactions).
- * Includes calculated fields for summary views.
+ * Includes calculated fields for summary views. Uses UUID for ID.
  * DTO para transferência de dados de Contas a Pagar (Revisado para Transações de Pagamento).
- * Inclui campos calculados para visões resumidas.
+ * Inclui campos calculados para visões resumidas. Usa UUID para ID.
  */
 @Data
 @NoArgsConstructor
@@ -27,18 +28,18 @@ import java.util.List;
 @Builder
 public class PayableDTO {
 
-    @Schema(description = "Unique identifier of the payable", example = "1", readOnly = true)
-    private Long id;
+    @Schema(description = "Unique identifier (UUID) of the payable", example = "123e4567-e89b-12d3-a456-426614174000", readOnly = true)
+    private UUID id; // <<<--- UUID
 
     @NotNull(message = "Supplier ID cannot be null / ID do Fornecedor não pode ser nulo")
     @Schema(description = "ID of the supplier this payable is owed to", example = "101")
-    private Long supplierId;
+    private Long supplierId; // Assuming supplier ID remains Long
 
     @Schema(description = "Optional ID of the project this payable relates to", example = "201")
-    private Long projectId;
+    private Long projectId; // Assuming project ID remains Long
 
     @Schema(description = "Optional ID of the cost center this payable relates to", example = "301")
-    private Long costCenterId;
+    private Long costCenterId; // Assuming cost center ID remains Long
 
     @NotBlank(message = "Description cannot be blank / Descrição não pode ser vazia")
     @Size(max = 300)
@@ -60,7 +61,7 @@ public class PayableDTO {
     // paymentDate is removed from the primary DTO, represented within transactions
 
     @NotNull(message = "Amount due cannot be null / Valor devido não pode ser nulo")
-    @DecimalMin(value = "0.01", message = "Amount due must be positive / Valor devido deve ser positivo") // Changed to 0.01 if zero is invalid
+    @DecimalMin(value = "0.0", inclusive = false, message = "Amount due must be positive / Valor devido deve ser positivo") // Allow zero? If not, "0.01"
     @Schema(description = "Total amount due for this payable", example = "1500.75")
     private BigDecimal amountDue;
 
@@ -84,5 +85,5 @@ public class PayableDTO {
     // Optionally include payment transactions in detailed views
     // Opcionalmente incluir transações de pagamento em visões detalhadas
     @Schema(description = "List of individual payment transactions made for this payable", readOnly = true)
-    private List<PaymentTransactionDTO> paymentTransactions;
+    private List<PaymentTransactionDTO> paymentTransactions; // This DTO also uses UUID ID
 }

@@ -1,4 +1,3 @@
-// Path: src/main/java/com/bufalari/payable/converter/PayableConverter.java
 package com.bufalari.payable.converter;
 
 import com.bufalari.payable.dto.PayableDTO;
@@ -14,9 +13,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Converts between PayableEntity and PayableDTO (Revised for Payment Transactions).
+ * Converts between PayableEntity (with UUID ID) and PayableDTO (with UUID ID).
  * Handles mapping, including calculated fields like totalAmountPaid and balanceDue.
- * Converte entre PayableEntity e PayableDTO (Revisado para Transações de Pagamento).
+ * Converte entre PayableEntity (com ID UUID) e PayableDTO (com ID UUID).
  * Trata o mapeamento, incluindo campos calculados como totalAmountPaid e balanceDue.
  */
 @Component
@@ -33,8 +32,8 @@ public class PayableConverter {
      * Converte PayableEntity para PayableDTO.
      * Inclui totalAmountPaid calculado, balanceDue, e opcionalmente a lista de transações.
      *
-     * @param entity The PayableEntity to convert. / A entidade PayableEntity para converter.
-     * @return The corresponding PayableDTO. / O PayableDTO correspondente.
+     * @param entity The PayableEntity (with UUID ID) to convert. / A entidade PayableEntity (com ID UUID) para converter.
+     * @return The corresponding PayableDTO (with UUID ID). / O PayableDTO (com ID UUID) correspondente.
      */
     public PayableDTO entityToDTO(PayableEntity entity) {
         if (entity == null) {
@@ -51,14 +50,14 @@ public class PayableConverter {
         List<PaymentTransactionDTO> transactionDTOs;
         if (entity.getPaymentTransactions() != null) {
             transactionDTOs = entity.getPaymentTransactions().stream()
-                                   .map(paymentTransactionConverter::entityToDTO) // Use the injected converter
-                                   .collect(Collectors.toList());
+                    .map(paymentTransactionConverter::entityToDTO) // Use the injected converter
+                    .collect(Collectors.toList());
         } else {
             transactionDTOs = Collections.emptyList(); // Use lista vazia se nulo
         }
 
         return PayableDTO.builder()
-                .id(entity.getId())
+                .id(entity.getId()) // <<<--- UUID
                 .supplierId(entity.getSupplierId())
                 .projectId(entity.getProjectId())
                 .costCenterId(entity.getCostCenterId())
@@ -85,8 +84,8 @@ public class PayableConverter {
      * Nota: Campos calculados (totalAmountPaid, balanceDue) e a lista de paymentTransactions
      * do DTO são ignorados durante esta conversão, pois são gerenciados pela lógica do serviço/entidade.
      *
-     * @param dto The PayableDTO to convert. / O PayableDTO para converter.
-     * @return The corresponding PayableEntity. / A PayableEntity correspondente.
+     * @param dto The PayableDTO (with UUID ID) to convert. / O PayableDTO (com ID UUID) para converter.
+     * @return The corresponding PayableEntity (with UUID ID). / A PayableEntity (com ID UUID) correspondente.
      */
     public PayableEntity dtoToEntity(PayableDTO dto) {
         if (dto == null) {
@@ -95,7 +94,7 @@ public class PayableConverter {
         // Note: Do NOT map paymentTransactions from DTO to Entity here. Transactions are added via service.
         // Nota: NÃO mapeie paymentTransactions do DTO para a Entidade aqui. Transações são adicionadas via serviço.
         return PayableEntity.builder()
-                .id(dto.getId()) // Keep ID for updates
+                .id(dto.getId()) // <<<--- UUID (Keep ID for updates)
                 .supplierId(dto.getSupplierId())
                 .projectId(dto.getProjectId())
                 .costCenterId(dto.getCostCenterId())

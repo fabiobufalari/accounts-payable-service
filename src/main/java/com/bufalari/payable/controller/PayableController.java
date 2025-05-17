@@ -38,7 +38,7 @@ import java.util.UUID; // <<<--- IMPORT UUID
  * Controlador REST para gerenciamento de contas a pagar e suas transações de pagamento.
  */
 @RestController
-@RequestMapping("/api/payables")
+@RequestMapping("/accounts-payable")
 @RequiredArgsConstructor
 @Tag(name = "Accounts Payable", description = "Endpoints for managing accounts payable and payments")
 @SecurityRequirement(name = "bearerAuth") // Assume security is applied via SecurityConfig/JWT

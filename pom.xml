@@ -49,6 +49,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId> <!-- Starter completo -->
 		</dependency>
+		
+		<!-- ======== EMAIL SUPPORT ======== -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<!-- ======== FIM EMAIL SUPPORT ======== -->
+		
 		<!-- JWT Library (JJWT) -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>

@@ -1,16 +1,16 @@
-# =========================================
+# ============================================
 # MS accounts-payable-service
-# =========================================
+# ============================================
 
-# =========================================
+# ============================================
 # Server Configuration accounts-payable-service
-# =========================================
+# ============================================
 server:
   port: 8088 # Porta deste serviço
 
-# =========================================
+# ============================================
 # Spring Boot Application Configuration
-# =========================================
+# ============================================
 spring:
   application:
     name: accounts-payable-service
@@ -28,24 +28,43 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
-# =========================================
+  # =========================================
+  # Mail Configuration (JavaMailSender)
+  # =========================================
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:bufalari.fabio@gmail.com}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          ssl:
+            trust: "*"
+    test-connection: false
+
+# ============================================
 # External Service URLs
-# =========================================
+# ============================================
 auth:
   service:
     url: ${AUTH_SERVICE_URL} # URL do Authentication Service
 
-# =========================================
+# ============================================
 # JWT Configuration (Este serviço VALIDA)
-# =========================================
+# ============================================
 security:
   jwt:
     token:
       secret-key: ${JWT_SECRET_KEY} # <<< CHAVE IDÊNTICA
 
-# =========================================
+# ============================================
 # Logging Configuration
-# =========================================
+# ============================================
 logging:
   level:
     org.springframework.web: INFO
@@ -53,9 +72,9 @@ logging:
     com.bufalari.payable: DEBUG # Pacote raiz deste serviço
     org.hibernate.SQL: DEBUG
 
-# =========================================
+# ============================================
 # Swagger/OpenAPI Configuration
-# =========================================
+# ============================================
 springdoc:
   api-docs:
     path: /v3/api-docs
@@ -65,9 +84,9 @@ springdoc:
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
 
-# =========================================
+# ============================================
 # Actuator Configuration
-# =========================================
+# ============================================
 management:
   endpoints:
     web:
@@ -76,3 +95,4 @@ management:
   endpoint:
     health:
       show-details: when_authorized
+

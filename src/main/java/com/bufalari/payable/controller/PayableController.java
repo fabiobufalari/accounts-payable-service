@@ -30,12 +30,20 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.math.BigDecimal; // Keep BigDecimal
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID; // <<<--- IMPORT UUID
 
 /**
  * REST controller for managing accounts payable and their payment transactions.
- * Controlador REST para gerenciamento de contas a pagar e suas transações de pagamento.
+ * 
+ * EN: This controller provides REST API endpoints for managing accounts payable,
+ * including CRUD operations, payment transactions, and integration with other services.
+ * 
+ * PT: Este controlador fornece endpoints de API REST para gerenciamento de contas a pagar,
+ * incluindo operações CRUD, transações de pagamento e integração com outros serviços.
  */
 @RestController
 @RequestMapping("/accounts-payable")
@@ -46,6 +54,58 @@ public class PayableController {
 
     private static final Logger log = LoggerFactory.getLogger(PayableController.class);
     private final PayableService payableService;
+
+    /**
+     * Health check endpoint for accounts payable service.
+     * 
+     * EN: Provides health status information for the accounts payable service.
+     * PT: Fornece informações de status de saúde para o serviço de contas a pagar.
+     * 
+     * @return ResponseEntity containing health status information
+     */
+    @GetMapping("/health")
+    @Operation(summary = "Health check", description = "Verifica o status de saúde do serviço de contas a pagar")
+    public ResponseEntity<Map<String, Object>> health() {
+        Map<String, Object> healthStatus = new HashMap<>();
+        healthStatus.put("service", "accounts-payable-service");
+        healthStatus.put("status", "healthy");
+        healthStatus.put("timestamp", LocalDateTime.now());
+        healthStatus.put("database", "connected");
+        return ResponseEntity.ok(healthStatus);
+    }
+    
+    /**
+     * Service status endpoint with detailed information.
+     * 
+     * EN: Provides detailed status information about the accounts payable service.
+     * PT: Fornece informações detalhadas de status sobre o serviço de contas a pagar.
+     * 
+     * @return ResponseEntity containing detailed service status
+     */
+    @GetMapping("/status")
+    @Operation(summary = "Service status", description = "Fornece informações detalhadas do status do serviço")
+    public ResponseEntity<Map<String, Object>> status() {
+        Map<String, Object> serviceStatus = new HashMap<>();
+        serviceStatus.put("service", "accounts-payable-service");
+        serviceStatus.put("status", "operational");
+        serviceStatus.put("version", "1.0.0");
+        serviceStatus.put("timestamp", LocalDateTime.now());
+        
+        Map<String, String> endpoints = new HashMap<>();
+        endpoints.put("create_payable", "/accounts-payable");
+        endpoints.put("get_payable", "/accounts-payable/{id}");
+        endpoints.put("get_all_payables", "/accounts-payable");
+        endpoints.put("get_overdue_payables", "/accounts-payable/overdue");
+        endpoints.put("update_payable", "/accounts-payable/{id}");
+        endpoints.put("delete_payable", "/accounts-payable/{id}");
+        endpoints.put("register_payment", "/accounts-payable/{payableId}/payments");
+        endpoints.put("get_payments", "/accounts-payable/{payableId}/payments");
+        endpoints.put("health", "/accounts-payable/health");
+        endpoints.put("status", "/accounts-payable/status");
+        
+        serviceStatus.put("endpoints", endpoints);
+        return ResponseEntity.ok(serviceStatus);
+    }
 
     // --- Payable CRUD ---
 
